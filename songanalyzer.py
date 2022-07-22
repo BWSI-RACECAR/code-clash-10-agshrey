@@ -31,6 +31,7 @@ Input: “good food for nice mice”;                           Output: ”f=2, 
 Input: “howdy rowdy hikers hope you have a great time”;     Output: "h=4, 2 rhyming words”
 """
 from collections import Counter
+from collections import OrderedDict
 import collections
 
 class Solution:
@@ -53,23 +54,24 @@ class Solution:
         for key, value in first.items():
             if value > 1:
                 c[key] = value
-
+        c2 = OrderedDict(sorted(c.items()))
         d = {}
         for i in a:
             if len(i) >= 3:
-                s = i[-3]
+                s = i[-3:]
                 if s not in d:
                     d[s] = 1
                 else:
                     d[s] += 1
         
+        # print(d)
         num = 0
         for el in d.values():
             if el > 1:
                 num += el
 
         string = ""
-        for k, v in c.items():
+        for k, v in c2.items():
             string += (k + "=" + str(v)) + ", "
         string += (str(num) + " rhyming words")
         return string
